@@ -18,7 +18,11 @@ public class RunQuery {
 
     public void execute(Dataset dataset) {
         Prologue prologue = new Prologue();
-        //prologue.setPrefix("skos", "http://www.w3.org/2004/02/skos/core#");
+        prologue.setPrefix("dc",   "http://purl.org/dc/elements/1.1/");
+        prologue.setPrefix("dct",  "http://purl.org/dc/terms/");
+        prologue.setPrefix("rdf",  "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        prologue.setPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        prologue.setPrefix("skos", "http://www.w3.org/2004/02/skos/core#");
 
         Query query = QueryFactory.parse(new Query(prologue), dq.query, null, null);
 
