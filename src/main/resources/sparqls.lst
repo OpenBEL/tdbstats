@@ -1,0 +1,38 @@
+#total number of triples
+SELECT (COUNT(*) AS ?no) { ?s ?p ?o  }
+
+#total number of entities
+SELECT (COUNT(DISTINCT ?s) AS ?no) { ?s a []  }
+
+#total number of DISTINCT resource URIs (deprecated??)
+SELECT (COUNT(DISTINCT ?s) AS ?no) { { ?s ?p ?o  } UNION { ?o ?p ?s } FILTER(!isBlank(?s) && !isLiteral(?s)) }
+
+#total number of DISTINCT classes
+SELECT (COUNT(DISTINCT ?o) AS ?no) { ?s rdf:type ?o }
+
+#total number of DISTINCT predicates
+SELECT (COUNT(DISTINCT ?p) AS ?no) { ?s ?p ?o }
+
+#total number of DISTINCT subject nodes
+SELECT (COUNT(DISTINCT ?s) AS ?no) {  ?s ?p ?o   }
+
+#total number of DISTINCT object nodes
+SELECT (COUNT(DISTINCT ?o) AS ?no) {  ?s ?p ?o  filter(!isLiteral(?o)) }
+
+#exhaustive list of classes used in the dataset
+SELECT DISTINCT ?type { ?s a ?type }
+
+#exhaustive list of properties used in the dataset
+SELECT DISTINCT ?p { ?s ?p ?o }
+
+#table: class vs. total number of instances of the class
+SELECT ?class (COUNT(?s) AS ?count) { ?s a ?class } GROUP BY ?class ORDER BY ?count
+
+#table: property vs. total number of triples using the property
+SELECT  ?p (COUNT(?s) AS ?count) { ?s ?p ?o } GROUP BY ?p ORDER BY ?count
+
+#table: property vs. total number of DISTINCT subjects in triples using the property
+SELECT  ?p (COUNT(DISTINCT ?s) AS ?count) { ?s ?p ?o } GROUP BY ?p ORDER BY ?count
+
+#table: property vs. total number of DISTINCT objects in triples using the property
+SELECT  ?p (COUNT(DISTINCT ?o) AS ?count) { ?s ?p ?o } GROUP BY ?p ORDER BY ?count
